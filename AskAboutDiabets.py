@@ -1,6 +1,8 @@
 import streamlit as st
 import pickle
 import os
+from datetime import datetime
+
 def show():
     # ---------------- Page Config ----------------
     st.set_page_config(
@@ -11,13 +13,10 @@ def show():
 
     st.title("🤖 Diabetes AI Chatbot")
 
-    # ---------------- Debug Section (IMPORTANT) ----------------
-    st.subheader("🔍 Debug Info")
-
+    # ---------------- Load Model ----------------
     model_path = "model.pkl"
     vectorizer_path = "vectorizer.pkl"
 
-    # ---------------- Load Model Safely ----------------
     try:
         if not os.path.exists(model_path) or os.path.getsize(model_path) == 0:
             raise ValueError("model.pkl is missing or empty")
@@ -35,10 +34,10 @@ def show():
         st.error(f"❌ Error loading model: {e}")
         st.stop()
 
-    # ---------------- App Description ----------------
+    # ---------------- Description ----------------
     st.write(
-        "Ask about diabetes in English or Swahili (Symptoms, Prevention, Treatment, Causes)\n"
-        "Uliza kuhusu kisukari kwa Kiingereza au Kiswahili (Dalili, Kinga, Tiba, Sababu)"
+        "Ask about diabetes in English or Swahili\n"
+        "Uliza kuhusu kisukari kwa Kiingereza au Kiswahili"
     )
 
     # ---------------- Session State ----------------
@@ -48,29 +47,59 @@ def show():
     # ---------------- User Input ----------------
     user_input = st.text_input("Type your question here / Andika swali lako hapa:")
 
-    # ---------------- Prediction ----------------
     if st.button("Send / Tuma"):
         if user_input.strip() != "":
             try:
                 X_input = vectorizer.transform([user_input])
                 response = model.predict(X_input)[0]
 
+                # Add timestamp
+                timestamp = datetime.now().strftime("%H:%M:%S")
+
                 st.session_state.chat_history.append({
                     "user": user_input,
-                    "bot": response
+                    "bot": response,
+                    "time": timestamp
                 })
 
             except Exception as e:
                 st.error(f"Prediction error: {e}")
         else:
-            st.warning("Please enter a question / Tafadhali andika swali")
+            st.warning("Please enter a question")
 
-    # ---------------- Chat Display ----------------
-    for chat in st.session_state.chat_history:
-        st.markdown(f"**You:** {chat['user']}")
-        st.markdown(f"**Bot:** {chat['bot']}")
-        st.markdown("---")
+    # ---------------- Chat Display (Newest on Top) ----------------
+    st.markdown("### 💬 Chat History")
+
+    for chat in reversed(st.session_state.chat_history):
+        st.markdown(
+            f"""
+            <div style="
+                background-color:#e6f2ff;
+                padding:10px;
+                border-radius:10px;
+                margin-bottom:5px;
+            ">
+                🧑 <b>You</b> <span style="font-size:10px;color:gray;">[{chat['time']}]</span><br>
+                {chat['user']}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f"""
+            <div style="
+                background-color:#f0f0f0;
+                padding:10px;
+                border-radius:10px;
+                margin-bottom:10px;
+            ">
+                🤖 <b>Bot</b> <span style="font-size:10px;color:gray;">[{chat['time']}]</span><br>
+                {chat['bot']}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
     # ---------------- Disclaimer ----------------
-    st.write("⚠️ This app is for educational purposes only. Consult a doctor for medical advice.")
-    st.write("⚠️ Programu hii ni kwa elimu tu. Tafadhali wasiliana na daktari kwa ushauri wa matibabu.")
+    st.write("⚠️ For education only. Consult a doctor.")
