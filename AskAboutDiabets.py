@@ -31,8 +31,6 @@ def show():
         with open(vectorizer_path, "rb") as f:
             vectorizer = pickle.load(f)
 
-        st.success()
-
     except Exception as e:
         st.error(f"❌ Error loading model: {e}")
         st.stop()
