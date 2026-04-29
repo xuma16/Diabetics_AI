@@ -53,6 +53,7 @@ def show():
                 X_input = vectorizer.transform([user_input])
                 response = model.predict(X_input)[0]
 
+                # Add timestamp
                 timestamp = datetime.now().strftime("%H:%M:%S")
 
                 st.session_state.chat_history.append({
@@ -69,59 +70,36 @@ def show():
     # ---------------- Chat Display (Newest on Top) ----------------
     st.markdown("### 💬 Chat History")
 
-    chat_container = st.container()
+    for chat in reversed(st.session_state.chat_history):
+        st.markdown(
+            f"""
+            <div style="
+                background-color:#e6f2ff;
+                padding:10px;
+                border-radius:10px;
+                margin-bottom:5px;
+            ">
+                🧑 <b>You</b> <span style="font-size:10px;color:gray;">[{chat['time']}]</span><br>
+                {chat['user']}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-    with chat_container:
-        for chat in reversed(st.session_state.chat_history):
-
-            # User message
-            st.markdown(
-                f"""
-                <div style="
-                    background-color:#e6f2ff;
-                    padding:10px;
-                    border-radius:10px;
-                    margin-bottom:5px;
-                ">
-                    🧑 <b>You</b> 
-                    <span style="font-size:10px;color:gray;">[{chat['time']}]</span><br>
-                    {chat['user']}
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-
-            # Bot message
-            st.markdown(
-                f"""
-                <div style="
-                    background-color:#f0f0f0;
-                    padding:10px;
-                    border-radius:10px;
-                    margin-bottom:10px;
-                ">
-                    🤖 <b>Bot</b> 
-                    <span style="font-size:10px;color:gray;">[{chat['time']}]</span><br>
-                    {chat['bot']}
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-
-    # ---------------- Auto Scroll to Top ----------------
-    st.markdown(
-        """
-        <script>
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        </script>
-        """,
-        unsafe_allow_html=True
-    )
+        st.markdown(
+            f"""
+            <div style="
+                background-color:#f0f0f0;
+                padding:10px;
+                border-radius:10px;
+                margin-bottom:10px;
+            ">
+                🤖 <b>Bot</b> <span style="font-size:10px;color:gray;">[{chat['time']}]</span><br>
+                {chat['bot']}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
     # ---------------- Disclaimer ----------------
     st.write("⚠️ For education only. Consult a doctor.")
-
-
-# Run the app
-if __name__ == "__main__":
-    show()
