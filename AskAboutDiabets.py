@@ -68,12 +68,9 @@ def show():
             st.warning("Please enter a question")
 
     # ---------------- Chat Display (Newest on Top) ----------------
-st.markdown("### 💬 Chat History")
+    st.markdown("### 💬 Chat History")
 
-chat_container = st.container()
-
-with chat_container:
-    for i, chat in enumerate(reversed(st.session_state.chat_history)):
+    for chat in reversed(st.session_state.chat_history):
         st.markdown(
             f"""
             <div style="
@@ -104,12 +101,5 @@ with chat_container:
             unsafe_allow_html=True
         )
 
-# ---------------- Auto Scroll to Top ----------------
-st.markdown(
-    """
-    <script>
-        window.scrollTo(0, 0);
-    </script>
-    """,
-    unsafe_allow_html=True
-)
+    # ---------------- Disclaimer ----------------
+    st.write("⚠️ For education only. Consult a doctor.")
