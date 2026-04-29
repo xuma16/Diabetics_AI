@@ -3,10 +3,10 @@ import AskAboutDiabets, MeasureYourDiabets
 
 page = st.sidebar.selectbox(
     "Navigate",
-    ["Home","Dashboard","Analysis"]
+    ["Ask About Diabets","Measure Your Diabets"]
 )
 
-if page == "home":
+if page == "Ask About Diabets":
     AskAboutDiabets.show()
-elif page == "Dashboard":
+elif page == "Measure Your Diabets":
     MeasureYourDiabets.show()
