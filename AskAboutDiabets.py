@@ -105,19 +105,21 @@ def show():
 
         st.markdown(
             f"""
-            <div style="
-                background-color:skyblue;
-                padding:10px;
-                border-radius:10px;
-                margin-bottom:5px;
-                display:inline-block;
-                width:fit-content;
-                max-width:70%;
-                word-wrap:break-word;
-            ">
-                🤖 <b>Bot</b> <span style="font-size:10px;color:gray;">[{chat['time']}]</span><br>
-                {chat['bot']}
-            </div>
+            <div style =" display:flex; justify-content:flex-end;">
+                <div style="
+                    background-color:skyblue;
+                    padding:10px;
+                    border-radius:10px;
+                    margin-bottom:5px;
+                    display:inline-block;
+                    width:fit-content;
+                    max-width:70%;
+                    word-wrap:break-word;
+                ">
+                    🤖 <b>Bot</b> <span style="font-size:10px;color:gray;">[{chat['time']}]</span><br>
+                    {chat['bot']}
+                </div>
+            </div
             """,
             unsafe_allow_html=True
         )
