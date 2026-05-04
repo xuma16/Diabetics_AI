@@ -127,5 +127,5 @@ def show():
     # ---------------- Disclaimer ----------------
     st.markdown(
         '<div class="center">⚠️ For education only. Consult a doctor.</div>',
-    allow_unsafe_html=True
+    unsafe_allow_html=True
     )
