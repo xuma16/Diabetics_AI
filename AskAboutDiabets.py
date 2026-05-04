@@ -52,12 +52,6 @@ def show():
         st.error(f"❌ Error loading model: {e}")
         st.stop()
 
-    # ---------------- Description ----------------
-    st.write(
-        "Ask about diabetes in English or Swahili\n"
-        "Uliza kuhusu kisukari kwa Kiingereza au Kiswahili"
-    )
-
     # ---------------- Session State ----------------
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = []
