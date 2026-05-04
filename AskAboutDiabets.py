@@ -27,7 +27,7 @@ def show():
 
     st.markdown(
         '<div class=header"><h1>Hellow Your Welcome</h1></div>'
-        '<div class="center">Ask me any things about diabets<br> Niulize chochote kuhusu kisukari</div>',
+        '<div class="center">Ask me any things about diabets<br> Niulize kuhusu kisukari</div>',
         unsafe_allow_html=True
         )
 
