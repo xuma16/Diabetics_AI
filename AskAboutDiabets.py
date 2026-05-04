@@ -4,6 +4,20 @@ import os
 from datetime import datetime
 
 def show():
+    st.markdown(
+        """
+            <style> 
+            h1{text-align:center;
+                color:brown;
+            }
+            .center{
+                text-align:center;
+                color:brown;
+                }
+            </style>
+        """,
+        unsafe_allow_html=True
+    )
     # ---------------- Page Config ----------------
     st.set_page_config(
         page_title="Diabetes AI Chatbot",
@@ -11,7 +25,11 @@ def show():
         layout="wide"
     )
 
-    st.title("🤖 Diabetes AI Chatbot")
+    st.markdown(
+        '<div class=header"><h1>Hellow Your Welcome</h1></div>'
+        '<div class="center">Ask me any things about diabets<br> Niulize chochote kuhusu kisukari</div>',
+        unsafe_allow_html=True
+        )
 
     # ---------------- Load Model ----------------
     model_path = "model.pkl"
@@ -78,6 +96,11 @@ def show():
                 padding:10px;
                 border-radius:10px;
                 margin-bottom:5px;
+                text-align: right;
+                display:inline-block;
+                width:fit-content;
+                max-width:70%;
+                word-wrap:break-word;
             ">
                 🧑 <b>You</b> <span style="font-size:10px;color:gray;">[{chat['time']}]</span><br>
                 {chat['user']}
@@ -89,10 +112,14 @@ def show():
         st.markdown(
             f"""
             <div style="
-                background-color:#f0f0f0;
+                background-color:skyblue;
                 padding:10px;
                 border-radius:10px;
-                margin-bottom:10px;
+                margin-bottom:5px;
+                display:inline-block;
+                width:fit-content;
+                max-width:70%;
+                word-wrap:break-word;
             ">
                 🤖 <b>Bot</b> <span style="font-size:10px;color:gray;">[{chat['time']}]</span><br>
                 {chat['bot']}
